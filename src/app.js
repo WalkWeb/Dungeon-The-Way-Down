@@ -10,21 +10,12 @@ const ZONE_ROM_MIN_SIZE = 5;
 const ZONE_ROM_MAX_SIZE = 9;
 const TILE_SIZE = 24;
 
-// todo рассчитывать в зависимости от разрешения экрана
-const VIEW_COLS = 31;
-const VIEW_ROWS = 21;
-
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-
-canvas.width = VIEW_COLS * TILE_SIZE;
-canvas.height = VIEW_ROWS * TILE_SIZE;
-
 const world = new World(ZONE_COUNT, ZONE_COLS, ZONE_ROWS, ZONE_MAX_ROOMS, ZONE_ROM_MIN_SIZE, ZONE_ROM_MAX_SIZE);
 const startPosition = world.playerStartPosition();
-
 const player = new Player(startPosition.x, startPosition.y);
-const camera = new Camera(player, world, VIEW_COLS, VIEW_ROWS, ZONE_COLS, ZONE_ROWS, TILE_SIZE, ctx);
+const camera = new Camera(player, world, ZONE_COLS, ZONE_ROWS, TILE_SIZE, ctx, canvas);
 
 function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -48,3 +39,8 @@ window.addEventListener('keydown', (e) => {
 });
 
 render();
+
+window.addEventListener('resize', () => {
+    camera.resizeCanvas();
+    render();
+});

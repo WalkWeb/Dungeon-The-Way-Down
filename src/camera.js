@@ -1,16 +1,17 @@
 
 export class Camera {
-    constructor(player, world, viewCols, viewRows, zoneCols, zoneRows, titleSize, ctx) {
+    constructor(player, world, zoneCols, zoneRows, titleSize, ctx, canvas) {
         this.player = player;
         this.world = world;
-        this.viewCols = viewCols;
-        this.viewRows = viewRows;
         this.zoneCols = zoneCols;
         this.zoneRows = zoneRows;
         this.titleSize = titleSize;
         this.ctx = ctx;
+        this.canvas = canvas;
         this.x = 0;
         this.y = 0;
+
+        this.resizeCanvas();
     }
 
     render() {
@@ -43,5 +44,21 @@ export class Camera {
                 }
             }
         }
+    }
+
+    resizeCanvas() {
+        this.viewCols = Math.floor(window.innerWidth / this.titleSize);
+        this.viewRows = Math.floor(window.innerHeight / this.titleSize);
+
+        if (this.viewCols % 2 === 0) {
+            this.viewCols -= 1;
+        }
+
+        if (this.viewRows % 2 === 0) {
+            this.viewRows -= 1;
+        }
+
+        this.canvas.width = this.viewCols * this.titleSize;
+        this.canvas.height = this.viewRows * this.titleSize;
     }
 }
