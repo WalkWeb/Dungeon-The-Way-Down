@@ -3,6 +3,9 @@ export class Player {
         this.zoneLevel = 0;
         this.x = x;
         this.y = y;
+        this.hp = 100;
+        this.maxHp = 100;
+        this.damage = 10;
         this.color = '#ffcc00';
     }
 
@@ -13,15 +16,16 @@ export class Player {
         }
 
         // Проверка коллизии с монстром
-        const isOccupied = world.zones[this.zoneLevel].monsters.some(
-            m => m !== this && m.x === this.x + dx && m.y === this.y + dy
+        const monsterAtTarget = world.zones[this.zoneLevel].monsters.find(
+            m => !m.isDead && m.x === this.x + dx && m.y === this.y + dy
         );
 
-        if (isOccupied) {
-            // todo тут будет обработка удара игрока по монстру
+        if (monsterAtTarget) {
+            monsterAtTarget.takeDamage(this.damage);
             return;
         }
 
+        // Клетка пустая - обычное движение в клетку
         this.x += dx;
         this.y += dy;
     }
@@ -34,5 +38,13 @@ export class Player {
         const screenX = (this.x - cameraX) * tileSize;
         const screenY = (this.y - cameraY + 1) * tileSize;
         ctx.fillText('@', screenX, screenY);
+    }
+
+    takeDamage(damage) {
+        this.hp -= damage;
+        if (this.hp < 0) this.hp = 0;
+        console.log(`Игрок получил ${damage} урона. HP: ${this.hp}`);
+
+        // todo обработка смерти
     }
 }
