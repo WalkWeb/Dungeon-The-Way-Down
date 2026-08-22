@@ -73,3 +73,7 @@ body {
     display: flex;
     flex-direction: column-reverse; /* Новые сообщения сверху */
 }
+
+.log-msg { margin-bottom: 4px; }
+.log-hit { color: #f88; }
+.log-kill { color: #8f8; font-weight: bold; }

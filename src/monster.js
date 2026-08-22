@@ -39,11 +39,9 @@ export class Monster {
     takeDamage(damage) {
         this.hp -= damage;
 
-        console.log(`Вы нанесли ${this.name} ${damage} урона!`);
-
         if (this.hp <= 0) {
             this.isDead = true;
-            console.log(`${this.name} убит!`);
+            window.gameLog(`${this.name} повержен!`, 'log-kill');
         }
     }
 

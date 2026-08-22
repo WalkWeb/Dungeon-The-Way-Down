@@ -45,7 +45,6 @@ export class Player {
     takeDamage(damage) {
         this.hp -= damage;
         if (this.hp < 0) this.hp = 0;
-        console.log(`Игрок получил ${damage} урона. HP: ${this.hp}`);
 
         // todo обработка смерти
 

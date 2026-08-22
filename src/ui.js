@@ -6,6 +6,17 @@ export class UI {
         this.hpText = document.getElementById('hp-text');
         this.atkVal = document.getElementById('atk-val');
         this.eventLog = document.getElementById('event-log');
+
+        window.gameLog = (text, type = '') => {
+            const msg = document.createElement('div');
+            msg.className = `log-msg ${type}`;
+            msg.innerText = `> ${text}`;
+            this.eventLog.prepend(msg);
+
+            if (this.eventLog.childNodes.length > 50) {
+                this.eventLog.lastChild.remove()
+            }
+        };
     }
 
     update() {
