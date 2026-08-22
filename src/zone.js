@@ -68,4 +68,10 @@ export class Zone {
             y += y1 < y2 ? 1 : -1;
         }
     }
+
+    monstersMove(player) {
+        this.monsters.forEach((m) => {
+            m.move(this, player);
+        });
+    }
 }

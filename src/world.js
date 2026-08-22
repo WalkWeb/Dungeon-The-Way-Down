@@ -22,4 +22,8 @@ export class World {
         let room = this.zones[0].rooms[0];
         return {x: Math.floor(room.x + room.w / 2), y: Math.floor(room.y + room.h / 2)};
     }
+
+    monstersMove(player) {
+        this.zones[player.zoneLevel].monstersMove(player);
+    }
 }

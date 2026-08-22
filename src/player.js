@@ -12,7 +12,7 @@ export class Player {
     move(dx, dy, world) {
         // Проверка коллизии со стеной (1 - стена, 0 - пол)
         if (world.zones[this.zoneLevel].map[this.y + dy][this.x + dx] !== 0) {
-            return;
+            return false;
         }
 
         // Проверка коллизии с монстром
@@ -22,12 +22,14 @@ export class Player {
 
         if (monsterAtTarget) {
             monsterAtTarget.takeDamage(this.damage);
-            return;
+            return true;
         }
 
         // Клетка пустая - обычное движение в клетку
         this.x += dx;
         this.y += dy;
+
+        return true;
     }
 
     draw(ctx, tileSize, cameraX, cameraY) {
@@ -46,5 +48,7 @@ export class Player {
         console.log(`Игрок получил ${damage} урона. HP: ${this.hp}`);
 
         // todo обработка смерти
+
+        return damage;
     }
 }

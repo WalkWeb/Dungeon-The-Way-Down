@@ -33,8 +33,12 @@ window.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') dx = 1;
 
     if (dx !== 0 || dy !== 0) {
-        player.move(dx, dy, world);
-        render();
+        let moved = player.move(dx, dy, world);
+
+        if (moved) {
+            world.monstersMove(player);
+            render();
+        }
     }
 });
 
