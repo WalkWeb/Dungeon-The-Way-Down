@@ -1,14 +1,75 @@
 body {
-    background-color: #1a1a1a;
+    background-color: #111;
+    color: #eee;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
-    overflow: hidden;
+}
+
+#ui-wrapper {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background: #1a1a1a;
+    border: 1px solid #333;
 }
 
 #gameCanvas {
-    border: 2px solid #333;
-    image-rendering: pixelated;
+    background: #000;
+    border: 2px solid #444;
+}
+
+#side-panel {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.stat-box {
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+}
+
+.hp-container {
+    width: 100%;
+    height: 20px;
+    background: #300;
+    position: relative;
+    border: 1px solid #600;
+    margin-bottom: 5px;
+}
+
+#hp-bar {
+    width: 100%;
+    height: 100%;
+    background: #c00;
+    transition: width 0.2s;
+}
+
+#hp-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 0;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.log-box {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#event-log {
+    font-size: 13px;
+    color: #aaa;
+    height: 300px;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column-reverse; /* Новые сообщения сверху */
 }

@@ -1,6 +1,7 @@
 import { Player } from '/src/player.js';
 import { World } from '/src/world.js';
 import { Camera } from '/src/camera.js';
+import { UI } from '/src/ui.js';
 
 const ZONE_COUNT = 1;
 const ZONE_COLS = 80;
@@ -16,6 +17,7 @@ const world = new World(ZONE_COUNT, ZONE_COLS, ZONE_ROWS, ZONE_MAX_ROOMS, ZONE_R
 const startPosition = world.playerStartPosition();
 const player = new Player(startPosition.x, startPosition.y);
 const camera = new Camera(player, world, ZONE_COLS, ZONE_ROWS, TILE_SIZE, ctx, canvas);
+const ui = new UI(player);
 
 function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -38,6 +40,7 @@ window.addEventListener('keydown', (e) => {
         if (moved) {
             world.monstersMove(player);
             render();
+            ui.update();
         }
     }
 });

@@ -2,12 +2,28 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>RogueJS Project</title>
+    <title>Dungeon: The Way Down</title>
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-<div id="game-container">
+<div id="ui-wrapper">
     <canvas id="gameCanvas"></canvas>
+
+    <aside id="side-panel">
+        <div class="stat-box">
+            <h2>Герой (@)</h2>
+            <div class="hp-container">
+                <div id="hp-bar"></div>
+                <span id="hp-text">100 / 100</span>
+            </div>
+            <p>Урон: <span id="atk-val">10</span></p>
+        </div>
+
+        <div class="log-box">
+            <h3>Журнал событий</h3>
+            <div id="event-log"></div>
+        </div>
+    </aside>
 </div>
 <script type="module" src="/src/app.js"></script>
 </body>

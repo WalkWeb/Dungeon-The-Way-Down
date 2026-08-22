@@ -58,6 +58,9 @@ export class Camera {
         this.viewCols = Math.floor(window.innerWidth / this.tileSize);
         this.viewRows = Math.floor(window.innerHeight / this.tileSize);
 
+        this.viewCols -= 14;
+        this.viewRows -= 2;
+
         if (this.viewCols % 2 === 0) {
             this.viewCols -= 1;
         }
