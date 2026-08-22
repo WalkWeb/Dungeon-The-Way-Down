@@ -18,10 +18,6 @@ export class World {
         }
     }
 
-    draw(zoneLevel, ctx, tileSize) {
-        this.zones[zoneLevel].draw(ctx, tileSize);
-    }
-
     playerStartPosition() {
         let room = this.zones[0].rooms[0];
         return {x: Math.floor(room.x + room.w / 2), y: Math.floor(room.y + room.h / 2)};

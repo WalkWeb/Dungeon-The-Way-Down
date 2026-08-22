@@ -1,11 +1,11 @@
 
 export class Camera {
-    constructor(player, world, zoneCols, zoneRows, titleSize, ctx, canvas) {
+    constructor(player, world, zoneCols, zoneRows, tileSize, ctx, canvas) {
         this.player = player;
         this.world = world;
         this.zoneCols = zoneCols;
         this.zoneRows = zoneRows;
-        this.titleSize = titleSize;
+        this.tileSize = tileSize;
         this.ctx = ctx;
         this.canvas = canvas;
         this.x = 0;
@@ -31,24 +31,32 @@ export class Camera {
                     this.ctx.fillStyle = isWall ? '#333' : '#1a1a1a';
 
                     // Координаты на экране: (Мировая координата - Координата камеры) * Размер плитки
-                    const screenX = (x - this.x) * this.titleSize;
-                    const screenY = (y - this.y) * this.titleSize;
+                    const screenX = (x - this.x) * this.tileSize;
+                    const screenY = (y - this.y) * this.tileSize;
 
-                    this.ctx.fillRect(screenX, screenY, this.titleSize, this.titleSize);
+                    this.ctx.fillRect(screenX, screenY, this.tileSize, this.tileSize);
 
                     // Добавим легкую сетку для стиля
                     if (!isWall) {
                         this.ctx.strokeStyle = '#222';
-                        this.ctx.strokeRect(screenX, screenY, this.titleSize, this.titleSize);
+                        this.ctx.strokeRect(screenX, screenY, this.tileSize, this.tileSize);
                     }
                 }
             }
         }
+
+        // Отображаем видимых монстров
+        this.world.zones[this.player.zoneLevel].monsters.forEach(m => {
+            if (m.x >= this.x && m.x <= this.x + this.viewCols &&
+                m.y >= this.y && m.y <= this.y + this.viewRows) {
+                m.draw(this.ctx, this.tileSize, this.x, this.y);
+            }
+        });
     }
 
     resizeCanvas() {
-        this.viewCols = Math.floor(window.innerWidth / this.titleSize);
-        this.viewRows = Math.floor(window.innerHeight / this.titleSize);
+        this.viewCols = Math.floor(window.innerWidth / this.tileSize);
+        this.viewRows = Math.floor(window.innerHeight / this.tileSize);
 
         if (this.viewCols % 2 === 0) {
             this.viewCols -= 1;
@@ -58,7 +66,7 @@ export class Camera {
             this.viewRows -= 1;
         }
 
-        this.canvas.width = this.viewCols * this.titleSize;
-        this.canvas.height = this.viewRows * this.titleSize;
+        this.canvas.width = this.viewCols * this.tileSize;
+        this.canvas.height = this.viewRows * this.tileSize;
     }
 }

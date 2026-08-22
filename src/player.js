@@ -7,11 +7,23 @@ export class Player {
     }
 
     move(dx, dy, world) {
-        // Простая проверка коллизии со стеной (1 - стена, 0 - пол)
-        if (world.zones[this.zoneLevel].map[this.y + dy][this.x + dx] === 0) {
-            this.x += dx;
-            this.y += dy;
+        // Проверка коллизии со стеной (1 - стена, 0 - пол)
+        if (world.zones[this.zoneLevel].map[this.y + dy][this.x + dx] !== 0) {
+            return;
         }
+
+        // Проверка коллизии с монстром
+        const isOccupied = world.zones[this.zoneLevel].monsters.some(
+            m => m !== this && m.x === this.x + dx && m.y === this.y + dy
+        );
+
+        if (isOccupied) {
+            // todo тут будет обработка удара игрока по монстру
+            return;
+        }
+
+        this.x += dx;
+        this.y += dy;
     }
 
     draw(ctx, tileSize, cameraX, cameraY) {
