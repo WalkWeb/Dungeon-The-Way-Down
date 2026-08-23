@@ -102,6 +102,41 @@ body {
     border-color: #555;
 }
 
+.hidden { display: none !important; }
+
+#inventory-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    z-index: 100;
+}
+
+.inventory-half {
+    width: 50%;
+    padding: 40px;
+    box-sizing: border-box;
+    border: 1px solid #444;
+}
+
+#character-panel { background: rgba(30, 30, 40, 0.5); }
+#player-inventory-panel { background: rgba(40, 40, 30, 0.5); border-left: 2px solid #666; }
+
+/* Стили для списков в оверлее */
+.inventory-half ul { list-style: none; padding: 0; }
+.inventory-half li {
+    padding: 15px;
+    background: #222;
+    margin-bottom: 10px;
+    border: 1px solid #444;
+    cursor: pointer;
+    font-size: 18px;
+}
+.inventory-half li:hover { background: #333; color: #ffcc00; }
+
 .log-msg { margin-bottom: 4px; }
 .log-hit { color: #f88; }
 .log-attack { color: #96a33c; }

@@ -8,6 +8,7 @@ export class Player {
         this.damage = 10;
         this.color = '#ffcc00';
         this.inventory = [];
+        this.gameState = 'PLAYING'; // PLAYING / INVENTORY
     }
 
     move(dx, dy, world) {

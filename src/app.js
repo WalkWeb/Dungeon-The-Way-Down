@@ -30,6 +30,15 @@ render();
 window.gameLog("Добро пожаловать в подземелье!");
 
 window.addEventListener('keydown', (e) => {
+    // Клавиша "i" работает всегда (открывает/закрывает)
+    if (e.key.toLowerCase() === 'i' || e.key.toLowerCase() === 'ш') {
+        ui.toggleInventory();
+        return;
+    }
+
+    // Если инвентарь открыт, блокируем движение
+    if (player.gameState !== 'PLAYING') return;
+
     let dx = 0;
     let dy = 0;
 
