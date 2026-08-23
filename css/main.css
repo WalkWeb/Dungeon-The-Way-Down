@@ -76,4 +76,5 @@ body {
 
 .log-msg { margin-bottom: 4px; }
 .log-hit { color: #f88; }
+.log-attack { color: #96a33c; }
 .log-kill { color: #8f8; font-weight: bold; }

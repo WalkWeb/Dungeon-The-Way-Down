@@ -43,6 +43,8 @@ export class Monster {
             this.isDead = true;
             window.gameLog(`${this.name} повержен!`, 'log-kill');
         }
+
+        return damage;
     }
 
     move(zone, player) {
@@ -54,7 +56,8 @@ export class Monster {
         // Если монстр вплотную — он атакует вместо движения
         if (dist === 1) {
             const damage = player.takeDamage(this.damage);
-            console.log(`${this.name} атакует! Вы получили ${damage} урона`);
+
+            window.gameLog(`${this.name} ударил вас на ${damage} урона`, 'log-hit');
 
             return;
         }

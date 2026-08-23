@@ -21,6 +21,7 @@ export class Player {
         );
 
         if (monsterAtTarget) {
+            window.gameLog(`Вы ударили ${monsterAtTarget.name} на ${this.damage} урона`, 'log-attack');
             monsterAtTarget.takeDamage(this.damage);
             return true;
         }

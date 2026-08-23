@@ -25,6 +25,10 @@ function render() {
     player.draw(ctx, TILE_SIZE, camera.x, camera.y);
 }
 
+render();
+
+window.gameLog("Добро пожаловать в подземелье!");
+
 window.addEventListener('keydown', (e) => {
     let dx = 0;
     let dy = 0;
@@ -44,8 +48,6 @@ window.addEventListener('keydown', (e) => {
         }
     }
 });
-
-render();
 
 window.addEventListener('resize', () => {
     camera.resizeCanvas();
