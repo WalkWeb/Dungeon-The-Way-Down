@@ -2,6 +2,9 @@
 export class UI {
     constructor(player) {
         this.player = player;
+        this.expBar = document.getElementById('exp-bar');
+        this.expText = document.getElementById('exp-text');
+        this.level = document.getElementById('level');
         this.hpBar = document.getElementById('hp-bar');
         this.hpText = document.getElementById('hp-text');
         this.damage = document.getElementById('char-damage');
@@ -30,6 +33,18 @@ export class UI {
         this.hpText.innerText = `${this.player.hp} / ${this.player.maxHp}`;
         this.damage.innerText = this.player.damage;
         this.armor.innerText = this.player.armor;
+
+        // Обновление опыта
+        const nextLevelExp = this.player.expTable[this.player.level] || this.player.exp;
+        const prevLevelExp = this.player.expTable[this.player.level - 1] || 0;
+        const currentExpInLevel = this.player.exp - prevLevelExp;
+        const neededExpInLevel = nextLevelExp - prevLevelExp;
+
+        const expPercent = Math.min(100, (currentExpInLevel / neededExpInLevel) * 100);
+
+        this.expBar.style.width = `${expPercent}%`;
+        this.expText.innerText = `${this.player.exp} / ${nextLevelExp}`
+        this.level.innerText = this.player.level;
 
         // Отрисовка быстрого доступа слева (показывает 5 не надетых предметов)
         this.inventory.innerHTML = '';

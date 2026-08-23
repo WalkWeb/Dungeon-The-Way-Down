@@ -3,6 +3,8 @@ export class Player {
         this.zoneLevel = 0;
         this.x = x;
         this.y = y;
+        this.level = 1;
+        this.exp = 0;
         this.hp = 100;
         this.maxHp = 100;
         this.damage = 10;
@@ -10,6 +12,9 @@ export class Player {
         this.color = '#ffcc00';
         this.inventory = [];
         this.gameState = 'PLAYING'; // PLAYING / INVENTORY
+
+        // Таблица опыта: для 2 уровня нужно 100, для 3 — 300 и т.д.
+        this.expTable = [0, 100, 300, 800, 1500, 2600, 4000, 6000, 8500, 12000];
 
         this.equipment = {
             head: null,
@@ -31,7 +36,7 @@ export class Player {
 
         if (monsterAtTarget) {
             window.gameLog(`Вы ударили ${monsterAtTarget.name} на ${this.damage} урона`, 'log-attack');
-            monsterAtTarget.takeDamage(this.damage);
+            monsterAtTarget.takeDamage(this);
             return true;
         }
 
@@ -127,5 +132,24 @@ export class Player {
         this.equipment[slot] = null;
 
         window.gameLog(`Вы сняли ${item.name}`);
+    }
+
+    // Метод получения опыта
+    addExp(amount) {
+        this.exp += amount;
+        window.gameLog(`Вы получили ${amount} опыта!`, 'log-kill');
+
+        // Проверяем повышение уровня (пока не достигнем макс. уровня в таблице)
+        while (this.level < this.expTable.length && this.exp >= this.expTable[this.level]) {
+            this.levelUp();
+        }
+    }
+
+    levelUp() {
+        this.level++;
+        this.maxHp += 20;
+        this.hp = this.maxHp;
+        this.damage += 2;
+        window.gameLog(`Новый уровень! Теперь вы ${this.level} уровня.`, 'log-lvl-up');
     }
 }

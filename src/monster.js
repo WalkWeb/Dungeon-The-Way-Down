@@ -1,8 +1,8 @@
 
 export const MONSTER_TEMPLATES = {
-    'slime':  { char: 's', color: '#ff00ff', hp: 10, damage: 2 },
-    'goblin': { char: 'g', color: '#00ff44', hp: 20, damage: 5 },
-    'orc':    { char: 'o', color: '#0088ff', hp: 40, damage: 10 },
+    'slime':  { char: 's', color: '#ff00ff', hp: 10, damage: 2, exp: 15 },
+    'goblin': { char: 'g', color: '#00ff44', hp: 20, damage: 5, exp: 35 },
+    'orc':    { char: 'o', color: '#0088ff', hp: 40, damage: 10, exp: 75 },
 };
 
 export class Monster {
@@ -20,6 +20,7 @@ export class Monster {
         this.name = name;
         this.hp = cfg.hp;
         this.damage = cfg.damage;
+        this.exp = cfg.exp;
         this.isDead = false;
     }
 
@@ -36,15 +37,16 @@ export class Monster {
         ctx.fillText(this.char, screenX, screenY);
     }
 
-    takeDamage(damage) {
-        this.hp -= damage;
+    takeDamage(player) {
+        this.hp -= player.damage;
 
         if (this.hp <= 0) {
             this.isDead = true;
+            player.addExp(this.exp);
             window.gameLog(`${this.name} повержен!`, 'log-kill');
         }
 
-        return damage;
+        return player.damage;
     }
 
     move(zone, player) {

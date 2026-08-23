@@ -208,8 +208,27 @@ body {
     color: #ffcc00;
 }
 
+.exp-container {
+    width: 100%;
+    height: 6px;
+    background: #002;
+    border: 1px solid #004;
+    margin-bottom: 5px;
+}
+
+#exp-bar {
+    width: 0%;
+    height: 100%;
+    background: #00aaff;
+    transition: width 0.3s;
+}
+
+#exp-text { font-weight: bold; color: #00aaff; }
+#level-val { color: #ffcc00; }
+
 .log-msg { margin-bottom: 4px; }
 .log-hit { color: #f88; }
 .log-attack { color: #96a33c; }
 .log-kill { color: #8f8; font-weight: bold; }
 .log-use { color: #1fb82b; }
+.log-lvl-up { color: #cf2cbe; }

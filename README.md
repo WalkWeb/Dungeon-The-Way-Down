@@ -10,3 +10,5 @@ docker compose up --build
 # Use application
 
 Open in browser http://localhost:5173/
+
+![screen.jpg](img/screen.jpg)
