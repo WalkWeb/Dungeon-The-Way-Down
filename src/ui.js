@@ -48,15 +48,46 @@ export class UI {
 
     updateInventory() {
         this.fullInvList.innerHTML = '';
+
+        // 1. Создаем секцию экипировки
+        const equipDiv = document.createElement('div');
+        equipDiv.className = 'equipment-section';
+
+        const slots = [
+            { id: 'head', label: 'Шлем' },
+            { id: 'body', label: 'Броня' },
+            { id: 'weapon', label: 'Оружие' }
+        ];
+
+        // Добавляем надетые предметы
+        slots.forEach(slot => {
+            const item = this.player.equipment[slot.id];
+            const slotP = document.createElement('div');
+            slotP.className = 'equipment-slot';
+            slotP.innerHTML = `${slot.label}: <span>${item ? item.name : 'пусто'}</span>`;
+            equipDiv.appendChild(slotP);
+        });
+
+        this.fullInvList.appendChild(equipDiv);
+
+        // Добавляем разделитель
+        const hr = document.createElement('div');
+        hr.className = 'separator';
+        this.fullInvList.appendChild(hr);
+
+        // Формируем список прочих предметов
         this.player.inventory.forEach((item, index) => {
             const li = document.createElement('li');
-            li.innerText = `${item.name} (восстанавливает. ${item.effect} HP)`;
+            li.innerText = item.name + (item.type === 'potion' ? ` (восстанавливает ${item.effect} HP)` : ' (Экипировка)');
             li.onclick = () => {
-                if (this.player.useItem(index)) {
-                    window.gameLog(`Вы выпили ${item.name}`, 'log-use');
-                    this.updateInventory();
-                    this.update();
+                if (item.type === 'potion') {
+                    if (this.player.useItem(index)) {
+                        window.gameLog(`Вы выпили ${item.name}`, 'log-use');
+                        this.updateInventory();
+                        this.update();
+                    }
                 }
+                // todo Логика надевания экипировки
             };
             this.fullInvList.appendChild(li);
         });

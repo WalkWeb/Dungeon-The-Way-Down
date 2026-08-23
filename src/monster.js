@@ -6,10 +6,10 @@ export const MONSTER_TEMPLATES = {
 };
 
 export class Monster {
-    constructor(x, y, templateId) {
-        const cfg = MONSTER_TEMPLATES[templateId];
+    constructor(x, y, name) {
+        const cfg = MONSTER_TEMPLATES[name];
         if (!cfg) {
-            console.error(`Шаблон монстра "${templateId}" не найден!`);
+            console.error(`Шаблон монстра "${name}" не найден!`);
             return;
         }
 
@@ -17,7 +17,7 @@ export class Monster {
         this.y = y;
         this.char = cfg.char;
         this.color = cfg.color;
-        this.name = templateId;
+        this.name = name;
         this.hp = cfg.hp;
         this.damage = cfg.damage;
         this.isDead = false;

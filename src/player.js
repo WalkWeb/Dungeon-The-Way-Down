@@ -9,6 +9,12 @@ export class Player {
         this.color = '#ffcc00';
         this.inventory = [];
         this.gameState = 'PLAYING'; // PLAYING / INVENTORY
+
+        this.equipment = {
+            head: null,
+            body: null,
+            weapon: null
+        };
     }
 
     move(dx, dy, world) {
