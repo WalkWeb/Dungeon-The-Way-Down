@@ -147,7 +147,13 @@ body {
 #player-inventory-panel { background: rgba(40, 40, 30, 0.5); border-left: 2px solid #666; }
 
 /* Стили для списков в оверлее */
-.inventory-half ul { list-style: none; padding: 0; }
+.inventory-half ul {
+    list-style: none;
+    padding: 0;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
 .inventory-half li {
     padding: 15px;
     background: #222;
@@ -156,6 +162,30 @@ body {
     cursor: pointer;
     font-size: 18px;
 }
+
+.equipment-section {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #555;
+}
+
+.equipment-slot {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #aaa;
+}
+
+.equipment-slot span {
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+.separator {
+    border-bottom: 2px solid #444;
+    margin: 20px 0;
+}
+
 .inventory-half li:hover { background: #333; color: #ffcc00; }
 
 .log-msg { margin-bottom: 4px; }

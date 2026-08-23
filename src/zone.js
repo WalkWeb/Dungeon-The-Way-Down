@@ -13,6 +13,9 @@ export class Zone {
         this.maxSize = maxSize;
         this.width = width;
         this.height = height;
+
+        // Занятые клетки
+        this.occupiedTiles = new Set();
     }
 
     generate() {
@@ -47,13 +50,14 @@ export class Zone {
 
         for (let i = 1; i < this.rooms.length; i++) {
             const room = this.rooms[i];
+
             // В каждой комнате создаем 1-2 монстра
             const count = Math.floor(Math.random() * 2) + 1;
+
             for (let j = 0; j < count; j++) {
-                const mx = Math.floor(room.x + Math.random() * room.w);
-                const my = Math.floor(room.y + Math.random() * room.h);
+                const pos = this.getRandomEmptyPos(room);
                 const type = types[Math.floor(Math.random() * types.length)];
-                this.monsters.push(new Monster(mx, my, type));
+                this.monsters.push(new Monster(pos.x, pos.y, type));
             }
         }
 
@@ -61,9 +65,8 @@ export class Zone {
         for (let i = 1; i < this.rooms.length; i++) {
             if (Math.random() < 0.7) { // 70% шанс появления зелья в комнате
                 const room = this.rooms[i];
-                const ix = Math.floor(room.x + Math.random() * room.w);
-                const iy = Math.floor(room.y + Math.random() * room.h);
-                this.items.push(new Item(ix, iy, 'potion'));
+                const pos = this.getRandomEmptyPos(room);
+                this.items.push(new Item(pos.x, pos.y, 'potion'));
             }
         }
     }
@@ -85,5 +88,20 @@ export class Zone {
         this.monsters.forEach((m) => {
             m.move(this, player);
         });
+    }
+
+    getRandomEmptyPos(room) {
+        let x, y, key;
+        let attempts = 0;
+        do {
+            x = Math.floor(room.x + Math.random() * room.w);
+            y = Math.floor(room.y + Math.random() * room.h);
+            key = `${x},${y}`;
+            attempts++;
+        } while ((this.map[y][x] !== 0 || this.occupiedTiles.has(key)) && attempts < 20);
+
+        this.occupiedTiles.add(key);
+
+        return { x, y };
     }
 }

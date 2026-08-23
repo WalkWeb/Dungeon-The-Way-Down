@@ -20,7 +20,8 @@ export class World {
 
     playerStartPosition() {
         let room = this.zones[0].rooms[0];
-        return {x: Math.floor(room.x + room.w / 2), y: Math.floor(room.y + room.h / 2)};
+        const pos = this.zones[0].getRandomEmptyPos(room);
+        return {x: pos.x, y: pos.y};
     }
 
     monstersMove(player) {
