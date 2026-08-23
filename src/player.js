@@ -6,6 +6,7 @@ export class Player {
         this.hp = 100;
         this.maxHp = 100;
         this.damage = 10;
+        this.armor = 0;
         this.color = '#ffcc00';
         this.inventory = [];
         this.gameState = 'PLAYING'; // PLAYING / INVENTORY
@@ -72,13 +73,52 @@ export class Player {
         return damage;
     }
 
+    // Использует предмет
     useItem(index) {
         const item = this.inventory[index];
-        if (item && item.type === 'potion') {
+        if (item.type === 'potion') {
             this.hp = Math.min(this.maxHp, this.hp + item.effect);
             this.inventory.splice(index, 1);
             return true;
+        } else if (item.type === 'equip') {
+            this.equipItem(item);
+            return true;
         }
         return false;
+    }
+
+    // Надевает предмет экипировки
+    equipItem(item) {
+        const slot = item.subType;
+
+        // Если надет аналогичный предмет - снимаем предыдущий
+        if (this.equipment[slot]) {
+            this.takeOff(this.equipment[slot]);
+        }
+
+        // Надеваем новый
+        this.equipment[slot] = item;
+        item.isEquipped = true;
+        this.damage += this.equipment[slot].damage;
+        this.armor += this.equipment[slot].armor;
+
+        window.gameLog(`Вы надели ${item.name}`);
+    }
+
+    // Снимает предмет экипировки
+    takeOff(item) {
+        const slot = item.subType;
+
+        if (!this.equipment[slot]) {
+            console.log('Вы пытаетесь снять предмет которого не существует');
+            return;
+        }
+
+        this.damage -= item.damage;
+        this.armor -= item.armor;
+        item.isEquipped = false;
+        this.equipment[slot] = null;
+
+        window.gameLog(`Вы сняли ${item.name}`);
     }
 }

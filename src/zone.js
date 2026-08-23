@@ -63,10 +63,16 @@ export class Zone {
 
         // Генерируем предметы
         for (let i = 1; i < this.rooms.length; i++) {
-            if (Math.random() < 0.7) { // 70% шанс появления зелья в комнате
-                const room = this.rooms[i];
-                const pos = this.getRandomEmptyPos(room);
+            const room = this.rooms[i];
+            const pos = this.getRandomEmptyPos(room);
+
+            const roll = Math.random();
+            if (roll < 0.4) { // 40% шанс на зелье
                 this.items.push(new Item(pos.x, pos.y, 'potion'));
+            } else if (roll < 0.8) { // 80% шанс на экипировку, если нет зелья
+                const subTypes = ['head', 'body', 'weapon'];
+                const randomSub = subTypes[Math.floor(Math.random() * subTypes.length)];
+                this.items.push(new Item(pos.x, pos.y, 'equip', randomSub));
             }
         }
     }

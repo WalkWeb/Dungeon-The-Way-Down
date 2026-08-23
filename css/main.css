@@ -154,7 +154,6 @@ body {
 .inventory-half ul {
     list-style: none;
     padding: 0;
-    max-height: 70vh;
     overflow-y: auto;
 }
 
@@ -169,14 +168,14 @@ body {
 
 .equipment-section {
     background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
+    padding: 0 15px;
     margin-bottom: 20px;
     border: 1px solid #555;
 }
 
 .equipment-slot {
     font-size: 18px;
-    margin-bottom: 10px;
+    margin: 15px 0;
     color: #aaa;
 }
 
@@ -185,12 +184,30 @@ body {
     font-weight: bold;
 }
 
+.equip-item {
+    padding: 5px;
+    background: #222;
+    margin-bottom: 10px;
+    border: 1px solid #444;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.equip-item:hover {
+    background: #333;
+    color: #ffcc00;
+    cursor: pointer;
+}
+
 .separator {
     border-bottom: 2px solid #444;
     margin: 20px 0;
 }
 
-.inventory-half li:hover { background: #333; color: #ffcc00; }
+.inventory-half li:hover {
+    background: #333;
+    color: #ffcc00;
+}
 
 .log-msg { margin-bottom: 4px; }
 .log-hit { color: #f88; }

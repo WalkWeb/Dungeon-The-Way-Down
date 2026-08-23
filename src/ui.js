@@ -4,7 +4,8 @@ export class UI {
         this.player = player;
         this.hpBar = document.getElementById('hp-bar');
         this.hpText = document.getElementById('hp-text');
-        this.atkVal = document.getElementById('atk-val');
+        this.damage = document.getElementById('char-damage');
+        this.armor = document.getElementById('char-armor');
         this.eventLog = document.getElementById('event-log');
         this.inventory = document.getElementById('inventory-list');
         this.inventoryOverlay = document.getElementById('inventory-overlay');
@@ -27,12 +28,15 @@ export class UI {
         const hpPercent = (this.player.hp / this.player.maxHp) * 100;
         this.hpBar.style.width = `${hpPercent}%`;
         this.hpText.innerText = `${this.player.hp} / ${this.player.maxHp}`;
-        this.atkVal.innerText = this.player.damage;
+        this.damage.innerText = this.player.damage;
+        this.armor.innerText = this.player.armor;
 
-        // Отрисовка быстрого доступа слева (показывает последние 5 предметов)
+        // Отрисовка быстрого доступа слева (показывает последние 5 не надетых предметов)
         this.inventory.innerHTML = '';
         const quickInv = this.player.inventory.slice(-5).reverse();
         quickInv.forEach((item, index) => {
+            if (item.isEquipped) return;
+
             const li = document.createElement('li');
             li.className = 'inventory-item';
             li.innerText = item.name;
@@ -62,10 +66,22 @@ export class UI {
         // Добавляем надетые предметы
         slots.forEach(slot => {
             const item = this.player.equipment[slot.id];
-            const slotP = document.createElement('div');
-            slotP.className = 'equipment-slot';
-            slotP.innerHTML = `${slot.label}: <span>${item ? item.name : 'пусто'}</span>`;
-            equipDiv.appendChild(slotP);
+            const slotDiv = document.createElement('div');
+            slotDiv.className = 'equipment-slot';
+
+            if (item) {
+                const desc = item.description(true);
+                slotDiv.innerHTML = `${slot.label}: ${desc}`;
+                slotDiv.onclick = () => {
+                    this.player.takeOff(item);
+                    this.updateInventory();
+                    this.update();
+                };
+            } else {
+                slotDiv.innerHTML = `${slot.label}: <span>пусто</span>`;
+            }
+
+            equipDiv.appendChild(slotDiv);
         });
 
         this.fullInvList.appendChild(equipDiv);
@@ -75,19 +91,17 @@ export class UI {
         hr.className = 'separator';
         this.fullInvList.appendChild(hr);
 
-        // Формируем список прочих предметов
+        // Формируем список прочих предметов (только не надетые)
         this.player.inventory.forEach((item, index) => {
+            if (item.isEquipped) return;
+
             const li = document.createElement('li');
-            li.innerText = item.name + (item.type === 'potion' ? ` (восстанавливает ${item.effect} HP)` : ' (Экипировка)');
+
+            li.innerText = item.description();
             li.onclick = () => {
-                if (item.type === 'potion') {
-                    if (this.player.useItem(index)) {
-                        window.gameLog(`Вы выпили ${item.name}`, 'log-use');
-                        this.updateInventory();
-                        this.update();
-                    }
-                }
-                // todo Логика надевания экипировки
+                this.player.useItem(index);
+                this.updateInventory();
+                this.update();
             };
             this.fullInvList.appendChild(li);
         });
