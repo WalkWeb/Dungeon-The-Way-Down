@@ -74,7 +74,36 @@ body {
     flex-direction: column-reverse; /* Новые сообщения сверху */
 }
 
+.inventory-box {
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+}
+
+#inventory-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.inventory-item {
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    background: #222;
+    border: 1px solid #333;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.inventory-item:hover {
+    background: #333;
+    border-color: #555;
+}
+
 .log-msg { margin-bottom: 4px; }
 .log-hit { color: #f88; }
 .log-attack { color: #96a33c; }
 .log-kill { color: #8f8; font-weight: bold; }
+.log-use { color: #1fb82b; }

@@ -1,11 +1,13 @@
 
 import {Monster, MONSTER_TEMPLATES} from '/src/monster.js';
+import {Item, ITEM_TEMPLATES} from '/src/item.js';
 
 export class Zone {
     constructor(width, height, maxRooms, minSize, maxSize) {
         this.map = Array(height).fill().map(() => Array(width).fill(1));
         this.rooms = [];
         this.monsters = [];
+        this.items = [];
         this.maxRooms = maxRooms;
         this.minSize = minSize;
         this.maxSize = maxSize;
@@ -52,6 +54,16 @@ export class Zone {
                 const my = Math.floor(room.y + Math.random() * room.h);
                 const type = types[Math.floor(Math.random() * types.length)];
                 this.monsters.push(new Monster(mx, my, type));
+            }
+        }
+
+        // Генерируем предметы
+        for (let i = 1; i < this.rooms.length; i++) {
+            if (Math.random() < 0.7) { // 70% шанс появления зелья в комнате
+                const room = this.rooms[i];
+                const ix = Math.floor(room.x + Math.random() * room.w);
+                const iy = Math.floor(room.y + Math.random() * room.h);
+                this.items.push(new Item(ix, iy, 'potion'));
             }
         }
     }

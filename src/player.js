@@ -7,6 +7,7 @@ export class Player {
         this.maxHp = 100;
         this.damage = 10;
         this.color = '#ffcc00';
+        this.inventory = [];
     }
 
     move(dx, dy, world) {
@@ -26,9 +27,21 @@ export class Player {
             return true;
         }
 
-        // Клетка пустая - обычное движение в клетку
+        // Клетка пустая - Движение в клетку
         this.x += dx;
         this.y += dy;
+
+        // Проверка коллизии с предметом (после движения)
+        const itemIndex = world.zones[this.zoneLevel].items.findIndex(
+            item => !item.isPickedUp && item.x === this.x && item.y === this.y
+        );
+
+        if (itemIndex !== -1) {
+            const item = world.zones[this.zoneLevel].items[itemIndex];
+            item.isPickedUp = true;
+            this.inventory.push(item);
+            window.gameLog(`Вы подобрали: ${item.name}`);
+        }
 
         return true;
     }
@@ -50,5 +63,15 @@ export class Player {
         // todo обработка смерти
 
         return damage;
+    }
+
+    useItem(index) {
+        const item = this.inventory[index];
+        if (item && item.type === 'potion') {
+            this.hp = Math.min(this.maxHp, this.hp + item.effect);
+            this.inventory.splice(index, 1);
+            return true;
+        }
+        return false;
     }
 }

@@ -52,6 +52,11 @@ export class Camera {
                 m.draw(this.ctx, this.tileSize, this.x, this.y);
             }
         });
+
+        // Отображаем видимые предметы
+        this.world.zones[this.player.zoneLevel].items.forEach(item => {
+            if (!item.isPickedUp) item.draw(this.ctx, this.tileSize, this.x, this.y);
+        });
     }
 
     resizeCanvas() {
