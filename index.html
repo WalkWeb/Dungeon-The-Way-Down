@@ -6,31 +6,34 @@
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-<div id="ui-wrapper">
-    <canvas id="gameCanvas"></canvas>
-
-    <aside id="side-panel">
-        <div class="stat-box">
-            <h2>Герой (@)</h2>
-            <div class="hp-container">
-                <div id="hp-bar"></div>
-                <span id="hp-text">100 / 100</span>
+<div class="container">
+    <div id="game-box">
+        <canvas id="gameCanvas"></canvas>
+    </div>
+    <div id="menu-box">
+        <div class="menu-row">
+            <div class="stat-box">
+                <h2>Герой (@)</h2>
+                <div class="hp-container">
+                    <div id="hp-bar"></div>
+                    <span id="hp-text">100 / 100</span>
+                </div>
+                <p>Урон: <span id="atk-val">10</span></p>
             </div>
-            <p>Урон: <span id="atk-val">10</span></p>
-        </div>
-        <div class="inventory-box">
-            <h3>Инвентарь</h3>
-            <ul id="inventory-list">
-                <!-- Items here -->
-            </ul>
-        </div>
-        <div class="log-box">
-            <h3>Журнал событий</h3>
-            <div id="event-log">
-                <!-- Logs here -->
+            <div class="inventory-box">
+                <h3>Инвентарь</h3>
+                <ul id="inventory-list">
+                    <!-- Items here -->
+                </ul>
+            </div>
+            <div class="log-box">
+                <h3>Журнал событий</h3>
+                <div id="event-log">
+                    <!-- Logs here -->
+                </div>
             </div>
         </div>
-    </aside>
+    </div>
 </div>
 <div id="inventory-overlay" class="hidden">
     <div id="character-panel" class="inventory-half">

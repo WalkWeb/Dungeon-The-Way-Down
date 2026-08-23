@@ -10,6 +10,8 @@ export class Camera {
         this.canvas = canvas;
         this.x = 0;
         this.y = 0;
+        this.gameBox = document.getElementById('game-box');
+        this.menuBox = document.getElementById('menu-box');
 
         this.resizeCanvas();
     }
@@ -60,11 +62,8 @@ export class Camera {
     }
 
     resizeCanvas() {
-        this.viewCols = Math.floor(window.innerWidth / this.tileSize);
-        this.viewRows = Math.floor(window.innerHeight / this.tileSize);
-
-        this.viewCols -= 14;
-        this.viewRows -= 2;
+        this.viewCols = Math.floor((window.innerWidth - this.menuBox.offsetWidth) / this.tileSize) - 1;
+        this.viewRows = Math.floor(this.gameBox.offsetHeight / this.tileSize) - 1;
 
         if (this.viewCols % 2 === 0) {
             this.viewCols -= 1;

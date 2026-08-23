@@ -1,20 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background-color: #111;
     color: #eee;
     font-family: 'Courier New', Courier, monospace;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
 }
 
-#ui-wrapper {
+.container {
     display: flex;
-    gap: 20px;
-    padding: 20px;
-    background: #1a1a1a;
-    border: 1px solid #333;
+    height: 100%;
+    width: 100%;
+}
+
+#game-box {
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#menu-box {
+    flex-basis: 360px;
+    flex-shrink: 0;
+    height: 100%;
+}
+
+.menu-row {
+    padding: 0 20px;
 }
 
 #gameCanvas {
@@ -22,16 +39,17 @@ body {
     border: 2px solid #444;
 }
 
-#side-panel {
-    width: 250px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
 .stat-box {
     border-bottom: 1px solid #444;
     padding-bottom: 10px;
+}
+
+.stat-box h2 {
+    margin: 20px 0;
+}
+
+.stat-box p {
+    margin: 10px 0;
 }
 
 .hp-container {
@@ -39,7 +57,6 @@ body {
     height: 20px;
     background: #300;
     position: relative;
-    border: 1px solid #600;
     margin-bottom: 5px;
 }
 
@@ -77,6 +94,10 @@ body {
 .inventory-box {
     border-bottom: 1px solid #444;
     padding-bottom: 10px;
+}
+
+.inventory-box h3, .log-box h3 {
+    margin: 6px 0 12px 0;
 }
 
 #inventory-list {
