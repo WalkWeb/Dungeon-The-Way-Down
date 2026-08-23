@@ -1,4 +1,8 @@
 
+# Dungeon: The Way Down
+
+Browser turn-based mini RPG on JavaScript.
+
 # Install and run
 
 docker compose up --build
