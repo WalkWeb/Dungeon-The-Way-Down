@@ -31,22 +31,28 @@ export class UI {
         this.damage.innerText = this.player.damage;
         this.armor.innerText = this.player.armor;
 
-        // Отрисовка быстрого доступа слева (показывает последние 5 не надетых предметов)
+        // Отрисовка быстрого доступа слева (показывает 5 не надетых предметов)
         this.inventory.innerHTML = '';
-        const quickInv = this.player.inventory.slice(-5).reverse();
-        quickInv.forEach((item, index) => {
+        let i = 0;
+
+        this.player.inventory.forEach((item, index) => {
             if (item.isEquipped) return;
+
+            if (i >= 5) {
+                return;
+            }
 
             const li = document.createElement('li');
             li.className = 'inventory-item';
             li.innerText = item.name;
             li.onclick = () => {
                 if (this.player.useItem(index)) {
-                    window.gameLog(`Вы выпили ${item.name}`, 'log-use');
+                    this.updateInventory();
                     this.update();
                 }
             };
             this.inventory.appendChild(li);
+            i++;
         });
     }
 

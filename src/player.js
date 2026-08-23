@@ -85,6 +85,7 @@ export class Player {
         if (item.type === 'potion') {
             this.hp = Math.min(this.maxHp, this.hp + item.effect);
             this.inventory.splice(index, 1);
+            window.gameLog(`Вы выпили ${item.name}`, 'log-use');
             return true;
         } else if (item.type === 'equip') {
             this.equipItem(item);
