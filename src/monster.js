@@ -1,8 +1,8 @@
 
 export const MONSTER_TEMPLATES = {
+    'slime':  { char: 's', color: '#ff00ff', hp: 10, damage: 2 },
     'goblin': { char: 'g', color: '#00ff44', hp: 20, damage: 5 },
     'orc':    { char: 'o', color: '#0088ff', hp: 40, damage: 10 },
-    'slime':  { char: 's', color: '#ff00ff', hp: 10, damage: 2 },
 };
 
 export class Monster {

@@ -65,12 +65,18 @@ export class Player {
     }
 
     takeDamage(damage) {
-        this.hp -= damage;
+        let realDamage = damage - this.armor;
+
+        if (realDamage < 0) {
+            realDamage = 0;
+        }
+
+        this.hp -= realDamage;
         if (this.hp < 0) this.hp = 0;
 
         // todo обработка смерти
 
-        return damage;
+        return realDamage;
     }
 
     // Использует предмет
