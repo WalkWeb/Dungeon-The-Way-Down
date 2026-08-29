@@ -38,14 +38,21 @@ export class Item {
         }
     }
 
-    draw(ctx, tileSize, cameraX, cameraY) {
+    draw(ctx, tileSize, cameraX, cameraY, images) {
         if (this.isPickedUp) return;
-        const screenX = (this.x - cameraX) * tileSize;
-        const screenY = (this.y - cameraY + 1) * tileSize;
 
-        ctx.fillStyle = this.color;
-        ctx.font = `bold ${tileSize}px monospace`;
-        ctx.fillText(this.char, screenX, screenY);
+        const screenX = (this.x - cameraX) * tileSize;
+        const screenY = (this.y - cameraY) * tileSize;
+
+        const assetKey = this.type === 'potion' ? 'potion' : this.subType;
+        ctx.drawImage(images[assetKey], screenX, screenY, tileSize, tileSize);
+
+        // const screenX = (this.x - cameraX) * tileSize;
+        // const screenY = (this.y - cameraY + 1) * tileSize;
+        //
+        // ctx.fillStyle = this.color;
+        // ctx.font = `bold ${tileSize}px monospace`;
+        // ctx.fillText(this.char, screenX, screenY);
     }
 
     description(isEquip = false) {

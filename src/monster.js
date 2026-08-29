@@ -24,17 +24,15 @@ export class Monster {
         this.isDead = false;
     }
 
-    draw(ctx, tileSize, cameraX, cameraY) {
+    draw(ctx, tileSize, cameraX, cameraY, images) {
         if (this.isDead) {
             return;
         }
 
         const screenX = (this.x - cameraX) * tileSize;
-        const screenY = (this.y - cameraY + 1) * tileSize;
+        const screenY = (this.y - cameraY) * tileSize;
 
-        ctx.fillStyle = this.color;
-        ctx.font = `bold ${tileSize}px monospace`;
-        ctx.fillText(this.char, screenX, screenY);
+        ctx.drawImage(images[this.name], screenX, screenY, tileSize, tileSize);
     }
 
     takeDamage(player) {

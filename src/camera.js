@@ -13,7 +13,25 @@ export class Camera {
         this.gameBox = document.getElementById('game-box');
         this.menuBox = document.getElementById('menu-box');
 
+        this.images = {};
+        this.loadedCount = 0;
+        this.assetNames = ['player', 'slime', 'goblin', 'orc', 'potion', 'head', 'body', 'weapon', 'wall', 'floor'];
+
         this.resizeCanvas();
+    }
+
+    loadAssets(callback) {
+        this.assetNames.forEach(name => {
+            const img = new Image();
+            img.src = `img/${name}.png`;
+            img.onload = () => {
+                this.loadedCount++;
+                if (this.loadedCount === this.assetNames.length) {
+                    callback();
+                }
+            };
+            this.images[name] = img;
+        });
     }
 
     render() {
@@ -30,18 +48,14 @@ export class Camera {
             for (let x = this.x; x < this.x + this.viewCols + 1; x++) {
                 if (y >= 0 && y < this.zoneCols && x >= 0 && x < this.zoneRows) {
                     const isWall = this.world.zones[this.player.zoneLevel].map[y][x] === 1;
-                    this.ctx.fillStyle = isWall ? '#333' : '#1a1a1a';
 
-                    // Координаты на экране: (Мировая координата - Координата камеры) * Размер плитки
                     const screenX = (x - this.x) * this.tileSize;
                     const screenY = (y - this.y) * this.tileSize;
 
-                    this.ctx.fillRect(screenX, screenY, this.tileSize, this.tileSize);
-
-                    // Добавим легкую сетку для стиля
-                    if (!isWall) {
-                        this.ctx.strokeStyle = '#222';
-                        this.ctx.strokeRect(screenX, screenY, this.tileSize, this.tileSize);
+                    if (isWall) {
+                        this.ctx.drawImage(this.images['wall'], screenX, screenY, this.tileSize, this.tileSize);
+                    } else {
+                        this.ctx.drawImage(this.images['floor'], screenX, screenY, this.tileSize, this.tileSize);
                     }
                 }
             }
@@ -51,14 +65,17 @@ export class Camera {
         this.world.zones[this.player.zoneLevel].monsters.forEach(m => {
             if (m.x >= this.x && m.x <= this.x + this.viewCols &&
                 m.y >= this.y && m.y <= this.y + this.viewRows) {
-                m.draw(this.ctx, this.tileSize, this.x, this.y);
+                m.draw(this.ctx, this.tileSize, this.x, this.y, this.images);
             }
         });
 
         // Отображаем видимые предметы
         this.world.zones[this.player.zoneLevel].items.forEach(item => {
-            if (!item.isPickedUp) item.draw(this.ctx, this.tileSize, this.x, this.y);
+            if (!item.isPickedUp) item.draw(this.ctx, this.tileSize, this.x, this.y, this.images);
         });
+
+        // Отображаем игрока
+        this.player.draw(this.ctx, this.tileSize, this.x, this.y, this.images);
     }
 
     resizeCanvas() {

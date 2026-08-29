@@ -9,7 +9,7 @@ const ZONE_ROWS = 80;
 const ZONE_MAX_ROOMS = 20;
 const ZONE_ROM_MIN_SIZE = 5;
 const ZONE_ROM_MAX_SIZE = 9;
-const TILE_SIZE = 24;
+const TILE_SIZE = 32;
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
@@ -19,13 +19,14 @@ const player = new Player(startPosition.x, startPosition.y);
 const camera = new Camera(player, world, ZONE_COLS, ZONE_ROWS, TILE_SIZE, ctx, canvas);
 const ui = new UI(player);
 
+camera.loadAssets(() => {
+    render();
+});
+
 function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     camera.render();
-    player.draw(ctx, TILE_SIZE, camera.x, camera.y);
 }
-
-render();
 
 window.gameLog("Добро пожаловать в подземелье!");
 

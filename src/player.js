@@ -59,14 +59,11 @@ export class Player {
         return true;
     }
 
-    draw(ctx, tileSize, cameraX, cameraY) {
-        ctx.fillStyle = this.color;
-        ctx.font = `${tileSize}px monospace`;
-
-        // Рисуем игрока относительно камеры
+    draw(ctx, tileSize, cameraX, cameraY, images) {
         const screenX = (this.x - cameraX) * tileSize;
-        const screenY = (this.y - cameraY + 1) * tileSize;
-        ctx.fillText('@', screenX, screenY);
+        const screenY = (this.y - cameraY) * tileSize;
+
+        ctx.drawImage(images['player'], screenX, screenY, tileSize, tileSize);
     }
 
     takeDamage(damage) {
